@@ -8,10 +8,10 @@ This project is an attempt to port Apache JMeter to:
 
 # Current Status
 
-under heavy development
+Brand new, immature and under development. It's really a project I started to (a) learn Go and (b) entise some 
+people I know (you know who you are) to work on a project with me.  
 
 # Building 
 
-go build ./... (though no cli or server yet)
+Just run 'make' output binary is called 'go-meter'
 
-TODO: Make a Makefile so that we can make this project
