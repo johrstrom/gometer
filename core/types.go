@@ -20,10 +20,18 @@ type TestPlan struct {
 // Sampler the interface all Samplers need to implement
 type Sampler interface {
 	Sample() SampleResult
+	TestElement
 }
 
 // TestElement the interface for all test elements
-type TestElement interface{}
+type TestElement interface {
+	Properties() Properties
+}
+
+// SimpleTestElement is the simplest implementation of a test element
+type SimpleTestElement struct {
+	Properties
+}
 
 // Properties for TestElements
 type Properties map[string]interface{}
@@ -33,10 +41,6 @@ type TestElementNode struct {
 	Type        string
 	TestElement TestElement
 	SubTree     []*TestElementNode
-}
-
-// ThreadGroup is a group of threads
-type ThreadGroup struct {
 }
 
 // AllElementTypes is all the different types of test elements

@@ -22,13 +22,18 @@ func (plan *TestPlan) GetRootNode() *TestElementNode {
 }
 
 // AddThreadGroup adds a thread group to the test plan
-func (plan *TestPlan) AddThreadGroup() {
+func (plan *TestPlan) AddThreadGroup() *TestElementNode {
 	root := plan.GetRootNode()
-	root.AddNodeUnder(NewThreadGroupNode())
+	group := newThreadGroupNode()
+
+	root.AddNodeUnder(newThreadGroupNode())
+	return group
 }
 
 func (plan *TestPlan) initRoot() {
-	root := &TestElementNode{}
+	root := &TestElementNode{
+		Type: "root",
+	}
 	plan.Tree = append(plan.Tree, root)
 }
 
@@ -40,7 +45,7 @@ func (parent *TestElementNode) AddNodeUnder(child *TestElementNode) {
 }
 
 // NewThreadGroupNode creates a new thread group node
-func NewThreadGroupNode() *TestElementNode {
+func newThreadGroupNode() *TestElementNode {
 
 	node := &TestElementNode{
 		Type:        "thread_group",
@@ -49,4 +54,13 @@ func NewThreadGroupNode() *TestElementNode {
 	}
 
 	return node
+}
+
+// NewSamplerNode creates a new node in the tree
+func NewSamplerNode(sampler Sampler) *TestElementNode {
+	return &TestElementNode{
+		Type:        "sampler",
+		SubTree:     make([]*TestElementNode, 0),
+		TestElement: sampler,
+	}
 }

@@ -22,8 +22,8 @@ var testServer = httptest.NewServer(createTestHandler())
 func TestGetSamplerWithGoodParams(test *testing.T) {
 	sampler := DefaultHTTPSampler()
 
-	sampler.Properties[httpMethod] = http.MethodGet
-	sampler.Properties[httpURL] = testServer.URL + getGoodSampleURL
+	sampler.properties[httpMethod] = http.MethodGet
+	sampler.properties[httpURL] = testServer.URL + getGoodSampleURL
 
 	result := sampler.Sample()
 	assert.Equal(test, true, result.Pass)
@@ -34,8 +34,8 @@ func TestGetSamplerWithGoodParams(test *testing.T) {
 func TestGetSampler404(test *testing.T) {
 	sampler := DefaultHTTPSampler()
 
-	sampler.Properties[httpMethod] = http.MethodGet
-	sampler.Properties[httpURL] = testServer.URL + "/doesnt/exist"
+	sampler.properties[httpMethod] = http.MethodGet
+	sampler.properties[httpURL] = testServer.URL + "/doesnt/exist"
 
 	result := sampler.Sample()
 	assert.Equal(test, false, result.Pass)
@@ -46,8 +46,8 @@ func TestGetSampler404(test *testing.T) {
 func TestGetSamplerCantConnect(test *testing.T) {
 	sampler := DefaultHTTPSampler()
 
-	sampler.Properties[httpMethod] = http.MethodGet
-	sampler.Properties[httpURL] = "http://localhost:23"
+	sampler.properties[httpMethod] = http.MethodGet
+	sampler.properties[httpURL] = "http://localhost:23"
 
 	result := sampler.Sample()
 	assert.Equal(test, false, result.Pass)
@@ -61,8 +61,8 @@ func TestGetSamplerBadParameters(test *testing.T) {
 	assert.Equal(test, false, result.Pass)
 	assert.Equal(test, "Invalid http method", result.Response)
 
-	sampler.Properties[httpMethod] = http.MethodGet
-	sampler.Properties[httpURL] = 1000
+	sampler.properties[httpMethod] = http.MethodGet
+	sampler.properties[httpURL] = 1000
 	result = sampler.Sample()
 
 	assert.Equal(test, false, result.Pass)

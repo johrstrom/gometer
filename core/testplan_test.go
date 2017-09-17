@@ -19,3 +19,26 @@ func TestBasicUse(test *testing.T) {
 	assert.NotEmpty(test, root.SubTree, "SubTree should not be empty")
 
 }
+
+func TestAddNodesUnser(test *testing.T) {
+	tp := NewTestPlan("testName")
+	group := tp.AddThreadGroup()
+
+	fooSampler := NewSamplerNode(&TestSampler{})
+	//fooSampler.TestElement.
+	group.AddNodeUnder(fooSampler)
+	assert.NotNil(test, group.SubTree, "ThreadGroup's SubTree should not be nil")
+	assert.NotEmpty(test, group.SubTree, "ThreadGroup's SubTree should not be empty")
+}
+
+type TestSampler struct {
+	props Properties
+}
+
+func (ts *TestSampler) Sample() SampleResult {
+	return SampleResult{}
+}
+
+func (ts *TestSampler) Properties() Properties {
+	return ts.props
+}

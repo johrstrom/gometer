@@ -16,7 +16,7 @@ const (
 
 // HTTPSampler the struct for making http samples.
 type HTTPSampler struct {
-	Properties    core.Properties
+	properties    core.Properties
 	client        *http.Client
 	payloadBuffer *bytes.Buffer
 }
@@ -24,12 +24,17 @@ type HTTPSampler struct {
 // DefaultHTTPSampler gives the basic most http sampler
 func DefaultHTTPSampler() *HTTPSampler {
 	sampler := &HTTPSampler{
-		Properties:    make(core.Properties),
+		properties:    make(core.Properties),
 		client:        http.DefaultClient,
 		payloadBuffer: bytes.NewBuffer(make([]byte, 100000)),
 	}
 
 	return sampler
+}
+
+// Properties to implement the TestElement interface
+func (sampler *HTTPSampler) Properties() core.Properties {
+	return sampler.properties
 }
 
 // Sample runs an http request to get a Sample
@@ -72,8 +77,8 @@ func failResult(message string) core.SampleResult {
 }
 
 func (sampler *HTTPSampler) createRequest() (*http.Request, error) {
-	if method, ok := sampler.Properties[httpMethod].(string); ok {
-		if url, ok := sampler.Properties[httpURL].(string); ok {
+	if method, ok := sampler.properties[httpMethod].(string); ok {
+		if url, ok := sampler.properties[httpURL].(string); ok {
 			return http.NewRequest(method, url, sampler.payloadBuffer)
 		}
 		return nil, errors.New("Invalid URL parameter")

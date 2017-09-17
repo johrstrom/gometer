@@ -1,0 +1,16 @@
+{
+    "Name": "SimpleTestPlan",
+    "Tree": [
+        {
+            "Type": "root",
+            "TestElement": null,
+            "SubTree": [
+                {
+                    "Type": "thread_group",
+                    "TestElement": {},
+                    "SubTree": []
+                }
+            ]
+        }
+    ]
+}
