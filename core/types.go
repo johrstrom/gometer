@@ -1,7 +1,17 @@
 package core
 
 const (
-	typeProperty string = "core.type"
+	// TypeProperty the property for type
+	TypeProperty string = "core.type"
+
+	// SamplerType the key to be use for samplers
+	SamplerType string = "sampler"
+
+	// ThreadGroupType the key to be used for ThreadGroups
+	ThreadGroupType string = "thread_group"
+
+	// RootNodeType the key to be used for root nodes
+	RootNodeType string = "root"
 )
 
 // SampleResult the result of samples
@@ -13,7 +23,7 @@ type SampleResult struct {
 // TestPlan - the struct that is the script for running tests
 type TestPlan struct {
 	Name string
-	Tree []*TestElementNode
+	root *TestElementNode
 }
 
 // Sampler the interface all Samplers need to implement
@@ -36,9 +46,10 @@ func (root *RootTestElement) Properties() Properties {
 	return root.props
 }
 
+// NewRoot creates a new Root Element
 func NewRoot() *RootTestElement {
 	p := make(Properties)
-	p[typeProperty] = "root"
+	p[TypeProperty] = RootNodeType
 
 	return &RootTestElement{
 		props: p,

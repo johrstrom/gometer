@@ -13,7 +13,7 @@ func (tg *ThreadGroup) Properties() Properties {
 // NewThreadGroupNode creates a new thread group node
 func newThreadGroupNode() *TestElementNode {
 	p := make(Properties)
-	p[typeProperty] = "thread_group"
+	p[TypeProperty] = ThreadGroupType
 
 	node := &TestElementNode{
 		SubTree: make([]*TestElementNode, 0),

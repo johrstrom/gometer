@@ -12,6 +12,10 @@ import (
 const (
 	httpMethod string = "HttpSampler.method"
 	httpURL    string = "HttpSampler.url"
+
+	// HTTPSamplerType is the value for the core.TypeProperty key for HTTPSampler
+	// structs
+	HTTPSamplerType string = "http_sampler"
 )
 
 // HTTPSampler the struct for making http samples.
@@ -23,8 +27,11 @@ type HTTPSampler struct {
 
 // DefaultHTTPSampler gives the basic most http sampler
 func DefaultHTTPSampler() *HTTPSampler {
+	p := make(core.Properties)
+	p[core.TypeProperty] = HTTPSamplerType
+
 	sampler := &HTTPSampler{
-		properties:    make(core.Properties),
+		properties:    p,
 		client:        http.DefaultClient,
 		payloadBuffer: bytes.NewBuffer(make([]byte, 100000)),
 	}
