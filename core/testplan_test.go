@@ -20,25 +20,18 @@ func TestBasicUse(test *testing.T) {
 
 }
 
-func TestAddNodesUnser(test *testing.T) {
+func TestAddNodesUnder(test *testing.T) {
 	tp := NewTestPlan("testName")
 	group := tp.AddThreadGroup()
 
-	fooSampler := NewSamplerNode(&TestSampler{})
-	//fooSampler.TestElement.
+	fooSampler := NewTestElementNode(NewTestSampler())
+	fooProps := fooSampler.TestElement.Properties()
+	fooProps["foo"] = "bar"
+
 	group.AddNodeUnder(fooSampler)
 	assert.NotNil(test, group.SubTree, "ThreadGroup's SubTree should not be nil")
 	assert.NotEmpty(test, group.SubTree, "ThreadGroup's SubTree should not be empty")
-}
 
-type TestSampler struct {
-	props Properties
-}
+	assert.Equal(test, fooSampler, group.SubTree[0], "First element of ThreadGroup's Tree should be a generic sampler")
 
-func (ts *TestSampler) Sample() SampleResult {
-	return SampleResult{}
-}
-
-func (ts *TestSampler) Properties() Properties {
-	return ts.props
 }

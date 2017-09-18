@@ -6,6 +6,21 @@ type ThreadGroup struct {
 }
 
 // Properties to implement TestElement
-func (t *ThreadGroup) Properties() Properties {
-	return t.props
+func (tg *ThreadGroup) Properties() Properties {
+	return tg.props
+}
+
+// NewThreadGroupNode creates a new thread group node
+func newThreadGroupNode() *TestElementNode {
+	p := make(Properties)
+	p[typeProperty] = "thread_group"
+
+	node := &TestElementNode{
+		SubTree: make([]*TestElementNode, 0),
+		TestElement: &ThreadGroup{
+			props: p,
+		},
+	}
+
+	return node
 }

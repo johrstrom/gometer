@@ -1,8 +1,7 @@
 package core
 
-var (
-// TestElementTypes are all the test element types
-//TestElementTypes map[string]string = AllElementTypes()
+const (
+	typeProperty string = "core.type"
 )
 
 // SampleResult the result of samples
@@ -28,9 +27,22 @@ type TestElement interface {
 	Properties() Properties
 }
 
-// SimpleTestElement is the simplest implementation of a test element
-type SimpleTestElement struct {
-	Properties
+// RootTestElement is the simplest implementation of a test element
+type RootTestElement struct {
+	props Properties
+}
+
+func (root *RootTestElement) Properties() Properties {
+	return root.props
+}
+
+func NewRoot() *RootTestElement {
+	p := make(Properties)
+	p[typeProperty] = "root"
+
+	return &RootTestElement{
+		props: p,
+	}
 }
 
 // Properties for TestElements
@@ -38,15 +50,6 @@ type Properties map[string]interface{}
 
 // TestElementNode the backing data structure for test scripts
 type TestElementNode struct {
-	Type        string
-	TestElement TestElement
-	SubTree     []*TestElementNode
+	TestElement
+	SubTree []*TestElementNode
 }
-
-// AllElementTypes is all the different types of test elements
-//func AllElementTypes() map[string]string {
-//	m := make(map[string]string)
-//	m["ThreadGroup"] = "ThreadGroup"
-
-//return m
-//}

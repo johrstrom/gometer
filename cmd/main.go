@@ -13,7 +13,7 @@ func main() {
 	plan := core.NewTestPlan("temp")
 	group := plan.AddThreadGroup()
 
-	samplerNode := core.NewSamplerNode(samplers.DefaultHTTPSampler())
+	samplerNode := core.NewTestElementNode(samplers.DefaultHTTPSampler())
 
 	group.AddNodeUnder(samplerNode)
 
